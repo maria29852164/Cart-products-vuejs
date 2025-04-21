@@ -55,6 +55,7 @@
 import { ref } from 'vue'
 import { useAuth } from "../auth/composables/useAuth.ts";
 import { useI18n } from "vue-i18n";
+import {useRouter} from "vue-router";
 
 // Usar 't' de useI18n
 const { t } = useI18n()
@@ -68,11 +69,12 @@ const emailRules = [(v: string) => !!v || t('login.required')]
 const passwordRules = [(v: string) => !!v || t('login.required')]
 
 const { login } = useAuth()
+const router = useRouter()
 
 const handleLogin = async () => {
   try {
     await login(email.value, password.value)
-    alert(t('login.title') + ' ¡exitoso!') // Ejemplo de mensaje en español
+    router.push({ name: 'products' })
   } catch (err) {
     error.value = t('login.error')
   }

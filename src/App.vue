@@ -17,11 +17,7 @@
 
     <!-- Main Content (Login Form) -->
     <v-main>
-      <v-container fluid>
-        <v-row class="mt-14" >
-          <Login/>
-        </v-row>
-      </v-container>
+      <router-view/>
     </v-main>
 
     <!-- Footer -->
@@ -37,7 +33,6 @@
 
 
 <script setup lang="ts">
-import Login from "./modules/components/login.vue";
 
 import { useI18n } from 'vue-i18n'
 import { computed } from 'vue'
