@@ -22,7 +22,8 @@ const routes = [
 // Configurar la guardia de navegación
 router.beforeEach((to, from, next) => {
     const { token } = useAuth()
-    console.log(to.meta.requiresAuth && (token==''  || !token))
+    console.log(token)
+    console.log( (token==''  || !token))
     if (to.meta.requiresAuth && (token==''  || !token) ) {
         next({ name: EndpointsEnum.LOGIN})
     } else {

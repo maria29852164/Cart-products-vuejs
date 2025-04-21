@@ -3,6 +3,8 @@
     <!-- Header -->
     <v-app-bar app color="green-darken-4" dark>
       <v-toolbar-title>Mi Aplicación</v-toolbar-title>
+      <v-spacer/>
+
       <v-select
           v-model="locale"
           :items="locales"
@@ -13,6 +15,15 @@
           hide-details
           style="max-width: 150px"
       />
+      <!-- Botón de Logout, solo si está autenticado -->
+      <v-btn
+          v-if="isAuthenticatedComputed"
+          icon
+          @click="handleLogout"
+          title="Cerrar sesión"
+      >
+        <v-icon>mdi-logout</v-icon>
+      </v-btn>
     </v-app-bar>
 
     <!-- Main Content (Login Form) -->
@@ -36,6 +47,8 @@
 
 import { useI18n } from 'vue-i18n'
 import { computed } from 'vue'
+import {useRouter} from "vue-router";
+import {useAuth} from "./modules/auth/composables/useAuth.ts";
 
 const { locale } = useI18n()
 
@@ -50,4 +63,12 @@ const selected = computed({
     locale.value = val
   },
 })
+const router = useRouter()
+const { token, logout } = useAuth()
+const isAuthenticatedComputed = computed(() => !(token=='' || !token))
+
+const handleLogout = () => {
+  logout()                         // Limpia el estado de autenticación
+  router.push({ name: 'login' })  // Redirige al login
+}
 </script>

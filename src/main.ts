@@ -10,11 +10,21 @@ import * as directives from 'vuetify/directives'
 import {createPinia} from "pinia";
 import {i18n} from "./i18n";
 import router from "./router";
+import {useAuthStore} from "./modules/auth/store/useAuthStore.ts";
 
 const vuetify = createVuetify({
     components,
     directives,
 })
 const pinia = createPinia()
+const app = createApp(App)
+app.use(pinia)
+const authStore = useAuthStore()
+authStore.loadToken()
+// settings
+app.use(i18n)
+app.use(vuetify)
+app.use(router)
 
-createApp(App).use(i18n).use(pinia).use(vuetify).use(router).mount('#app')
+
+app.mount('#app')
