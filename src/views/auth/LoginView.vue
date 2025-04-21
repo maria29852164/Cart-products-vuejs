@@ -1,9 +1,10 @@
 <template>
-  <v-app>
-
+  <v-container class="mt-14">
     <Login/>
 
-  </v-app>
+  </v-container>
+
+
 </template>
 
 
