@@ -27,6 +27,8 @@
             />
             <v-container class="d-flex justify-center align-center">
               <v-btn
+                  type="submit"
+
                   class="text-none text-subtitle-1 w-25 rounded-xl	"
                   color="green-darken-4"
               >
