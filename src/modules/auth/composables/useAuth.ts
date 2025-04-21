@@ -16,8 +16,8 @@ export function useAuth() {
 
         if (!res.ok) throw new Error('Login failed')
 
-        const data = await res.json()
-        store.setToken(data.token)
+        const response = await res.json()
+        store.setToken(response.data.token)
     }
 
     return { login, logout: store.logout, token: store.token }
