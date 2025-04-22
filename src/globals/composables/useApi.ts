@@ -14,6 +14,7 @@ export function useApi<T>(endpoint: string, options?: AxiosRequestConfig) {
     const { t } = useI18n()
     const {token} = useAuth()
 
+    const url =  import.meta.env.VITE_API_URL;
 
     const fetchData = async (params = {}) => {
         loading.value = true
@@ -36,21 +37,21 @@ export function useApi<T>(endpoint: string, options?: AxiosRequestConfig) {
         loading.value = true;
         error.value = null;
         try {
-            const response = await fetch(endpoint, {
+            const response = await fetch(`${url}/${endpoint}`, {
                 method: 'POST',
                 headers: {
                     [EndpointsEnum.CONTENT_TYPE]: EndpointsEnum.APPLICATION_TYPE,
-                     'Authorization': `Bearer ${token}`,
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(payload),
             });
             if (!response.ok) throw new Error('Error en la solicitud POST');
             data.value = await response.json();
         } catch (err) {
-            error.value = err as Error;
+            error.value = err instanceof Error ? err.message : 'Error desconocido';
         } finally {
             loading.value = false;
         }
-    }
+    };
     return { data, loading, error, empty, fetchData, postData }
 }

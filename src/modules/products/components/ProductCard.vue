@@ -86,14 +86,21 @@
 import { useRouter } from 'vue-router'
 import {useCartStore} from "../../cart/store/useCartStore.ts";
 import type {CartItem} from "../../types/card.types.ts";
+import {useApi} from "../../../globals/composables/useApi.ts";
+import {EndpointsEnum} from "../../../utils/endpoints";
+
 
 
 const cart = useCartStore()
 const router = useRouter()
 
 // Incrementar cantidad
-const increment = (item: CartItem) => {
-  cart.addProduct(item) // asume que addProduct suma 1 si ya existe
+const increment = async (item: CartItem) => {
+
+
+  cart.addProduct(item)
+
+
 }
 
 // Decrementar cantidad (elimina si llega a 0)

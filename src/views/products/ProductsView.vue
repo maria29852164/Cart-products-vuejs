@@ -117,6 +117,7 @@ const products = ref<Product[]>([])
 const page = ref(1)
 const hasMore = ref(true)
 const filters = ref<Record<string, any>>({})
+const { postData, loading:loadingPostData, error: errorPostData } = useApi<any>(EndpointsEnum.CARTS);
 
 // Carrito
 const cart = useCartStore()
@@ -179,6 +180,7 @@ const addToCart = (prod: Product) => {
     quantity: 1,
     image: prod.images[0]?.url,
   })
+   postData({ product_id: prod.id, stock: 1 });
 }
 </script>
 
