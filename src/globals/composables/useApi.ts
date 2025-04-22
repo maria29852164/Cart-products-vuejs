@@ -11,7 +11,6 @@ export function useApi<T>(endpoint: string, options?: AxiosRequestConfig) {
     const loading = ref(false)
     const error = ref<string | null>(null)
     const empty = ref(false)
-    const { t } = useI18n()
     const {token} = useAuth()
 
     const url =  import.meta.env.VITE_API_URL;
@@ -27,17 +26,17 @@ export function useApi<T>(endpoint: string, options?: AxiosRequestConfig) {
 
             empty.value = Array.isArray(res.data) ? res.data.length === 0 : !res.data
         } catch (e: any) {
-            error.value = e.message || t('errors.globalError')
+            error.value = e.message || "Error"
         } finally {
             loading.value = false
         }
     }
-    const postData = async (payload: Record<string, any>) => {
+    const postData = async (payload: Record<string, any>,params='', method='POST') => {
         loading.value = true;
         error.value = null;
         try {
-            const response = await fetch(`${url}/${endpoint}`, {
-                method: 'POST',
+            const response = await fetch(params !=='' ?`${url}/${endpoint}/${params}` :`${url}/${endpoint}`, {
+                method: method,
                 headers: {
                     [EndpointsEnum.CONTENT_TYPE]: EndpointsEnum.APPLICATION_TYPE,
                     'Authorization': `Bearer ${token}`,
