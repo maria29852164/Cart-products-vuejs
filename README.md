@@ -1,5 +1,21 @@
-# Vue 3 + TypeScript + Vite
+# Proyecto Carrito de Compras
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Este es un proyecto de carrito de compras desarrollado con **Vue.js**, **Pinia**, **Vuetify**, y una API backend para manejar la persistencia de los datos. El objetivo principal es gestionar el carrito de compras de los usuarios y permitirles agregar, eliminar o modificar productos en su carrito.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## Requisitos
+
+Antes de ejecutar el proyecto, asegúrate de tener los siguientes requisitos instalados:
+
+- **Node.js** (versión 16 o superior)
+- **npm** (o **yarn** si prefieres usarlo como gestor de dependencias)
+
+## Instrucciones para ejecutar el proyecto
+
+Sigue estos pasos para poner en marcha la aplicación:
+
+### 1. Clonar el repositorio
+
+Primero, clona el repositorio a tu máquina local usando Git:
+
+```bash
+git clone https://github.com/maria29852164/Cart-products-vuejs
