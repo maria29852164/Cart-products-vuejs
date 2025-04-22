@@ -10,6 +10,9 @@ const messages = {
             error: 'Incorrect email or password',
             required: 'This field is required',
         },
+       errors:{
+            globalError:'Unknown error '
+       }
     },
     es: {
         login: {
@@ -20,6 +23,9 @@ const messages = {
             error: 'Correo o contraseña incorrectos',
             required: 'Este campo es requerido',
         },
+        errors:{
+            globalError:'Error Desconocido.'
+        }
     },
 }
 

@@ -53,7 +53,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useAuth } from "../auth/composables/useAuth.ts";
+import { useAuth } from "../composables/useAuth.ts";
 import { useI18n } from "vue-i18n";
 import {useRouter} from "vue-router";
 
