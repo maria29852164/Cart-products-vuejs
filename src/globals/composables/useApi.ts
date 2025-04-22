@@ -20,7 +20,11 @@ export function useApi<T>(endpoint: string, options?: AxiosRequestConfig) {
         error.value = null
         try {
             const res = await api.get<T>(endpoint, { ...options, params })
-            data.value = res.data?.data
+
+             data.value = res.data.data
+
+
+
             empty.value = Array.isArray(res.data) ? res.data.length === 0 : !res.data
         } catch (e: any) {
             error.value = e.message || t('errors.globalError')
