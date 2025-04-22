@@ -12,7 +12,7 @@
 import Login from "../../modules/auth/components/login.vue";
 
 import { useI18n } from 'vue-i18n'
-import { computed } from 'vue'
+import {computed, type WritableComputedRef} from 'vue'
 
 const { locale } = useI18n()
 
@@ -21,7 +21,7 @@ const locales = [
   { code: 'en', label: 'English' },
 ]
 
-const selected = computed({
+const selected: WritableComputedRef<string, string> = computed({
   get: () => locale.value,
   set: (val) => {
     locale.value = val
