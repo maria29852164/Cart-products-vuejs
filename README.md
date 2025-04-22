@@ -70,7 +70,7 @@ Este es un proyecto de carrito de compras desarrollado con **Vue.js**, **Pinia**
 
 Antes de ejecutar el proyecto, asegúrate de tener los siguientes requisitos instalados:
 
-- **Node.js** (versión 16 o superior)
+- **Node.js** (versión 22 o superior)
 - **npm** (o **yarn** si prefieres usarlo como gestor de dependencias)
 
 ## Instrucciones para ejecutar el proyecto
