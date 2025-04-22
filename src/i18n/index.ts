@@ -12,7 +12,15 @@ const messages = {
         },
        errors:{
             globalError:'Unknown error '
-       }
+       },
+        products:{
+            productNotFound: 'No products found.',
+            categories: 'Categories:',
+            brands: 'Brands:',
+            colors: 'Colors:',
+            addToCart: 'Add to Cart',
+            outOfStock: 'Out of Stock',
+        }
     },
     es: {
         login: {
@@ -25,6 +33,14 @@ const messages = {
         },
         errors:{
             globalError:'Error Desconocido.'
+        },
+        products:{
+            productNotFound: 'No se encontraron productos.',
+            categories: 'Categorías:',
+            brands: 'Marcas:',
+            colors: 'Colores:',
+            addToCart: 'Agregar al Carrito',
+            outOfStock: 'Sin Stock',
         }
     },
 }
