@@ -140,6 +140,8 @@ const loadPage = async () => {
 
 // Infinite scroll
 onMounted(async () => {
+  cart.fetchCartItems()
+
   await loadPage()
   await nextTick()
 

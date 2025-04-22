@@ -47,10 +47,11 @@
 <script setup lang="ts">
 
 import { useI18n } from 'vue-i18n'
-import { computed } from 'vue'
+import {computed, onMounted} from 'vue'
 import {useRouter} from "vue-router";
 import {useAuth} from "./modules/auth/composables/useAuth.ts";
 import Cart from "./modules/cart/components/cart.vue";
+import {useCartStore} from "./modules/cart/store/useCartStore.ts";
 
 const { locale } = useI18n()
 
@@ -68,9 +69,9 @@ const selected = computed({
 const router = useRouter()
 const { token, logout } = useAuth()
 const isAuthenticatedComputed = computed(() => !(token=='' || !token))
-
 const handleLogout = () => {
   logout()                         // Limpia el estado de autenticación
   router.push({ name: 'login' })  // Redirige al login
 }
+
 </script>

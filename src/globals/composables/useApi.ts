@@ -21,7 +21,6 @@ export function useApi<T>(endpoint: string, options?: AxiosRequestConfig) {
         error.value = null
         try {
             const res = await api.get<T>(endpoint, { ...options, params })
-
              data.value = res.data.data
 
 

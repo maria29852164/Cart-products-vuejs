@@ -40,9 +40,13 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import {useCartStore} from "../store/useCartStore.ts";
+import {onMounted} from "vue";
 
 const cart = useCartStore()
 const router = useRouter()
+onMounted(() => {
+  cart.fetchCartItems();
+});
 
 const goToCheckout = () => {
   router.push({ name: 'checkout' })
