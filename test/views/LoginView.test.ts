@@ -1,4 +1,3 @@
-// tests/views/LoginView.test.ts
 import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 
@@ -20,7 +19,6 @@ describe('LoginView', () => {
             },
         })
 
-        // Obtenemos las etiquetas directamente de i18n:
         const emailLabel    = i18n.global.t('login.email')    // p.ej. "Correo electrónico"
         const passwordLabel = i18n.global.t('login.password') // p.ej. "Contraseña"
         const btnText       = i18n.global.t('login.loginButton') // p.ej. "Entrar"
@@ -35,6 +33,5 @@ describe('LoginView', () => {
         await userEvent.click(submitButton)
 
         expect(submitButton).toBeInTheDocument()
-        // Aquí puedes añadir más aserciones, p.ej. que se llame al endpoint mockeado…
     })
 })
