@@ -68,7 +68,7 @@ export const useCartStore = defineStore("cart", {
                 await fetchData();
 
                 if (data.value) {
-                    this.items = data.value.map((item) => ({
+                    this.items = data.value.map((item:any) => ({
                         uuid: item.uuid,
                         product: item.product,
                         quantity: item.stock,

@@ -5,5 +5,6 @@ export enum EndpointsEnum{
      PRODUCTS = 'products',
      SHOP = 'shop',
      SHOP_CATEGORIES = 'shop/categories',
-     CARTS = 'carts'
+     CARTS = 'carts',
+     CARTS_CHECKOUT = 'carts/checkout'
 }

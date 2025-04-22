@@ -8,29 +8,29 @@
     </template>
 
     <v-list>
-      <v-list-item v-for="item in cart.items" :key="item.id">
+      <v-list-item v-for="item in cart.items" :key="item.uuid">
         <v-list-item-avatar>
-          <v-img :src="item.image" />
+          <v-img :src="item.product.image" />
         </v-list-item-avatar>
         <v-list-item-content>
-          <v-list-item-title>{{ item.name }}</v-list-item-title>
+          <v-list-item-title>{{ item.product.name }}</v-list-item-title>
           <v-list-item-subtitle>
-            {{ item.quantity }} × ${{ item.price }}
+            {{ item.quantity }} × ${{ item.product.price }}
           </v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-action>
           <!-- Botón para disminuir cantidad -->
-          <v-btn icon @click="updateQuantity(item.id, item.quantity - 1)" :disabled="item.quantity <= 1">
+          <v-btn icon @click="updateQuantity(item.uuid, item.quantity - 1)" :disabled="item.quantity <= 1">
             <v-icon>mdi-minus</v-icon>
           </v-btn>
 
           <!-- Botón para aumentar cantidad -->
-          <v-btn icon @click="updateQuantity(item.id, item.quantity + 1)">
+          <v-btn icon @click="updateQuantity(item.uuid, item.quantity + 1)">
             <v-icon>mdi-plus</v-icon>
           </v-btn>
 
           <!-- Botón para eliminar producto -->
-          <v-btn icon @click="cart.removeProduct(item.id)">
+          <v-btn icon @click="removeProduct(item.uuid)">
             <v-icon>mdi-delete</v-icon>
           </v-btn>
         </v-list-item-action>
@@ -51,31 +51,52 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 import { useCartStore } from "../store/useCartStore.ts";
-import {onMounted, toRaw} from "vue";
-import {useApi} from "../../../globals/composables/useApi.ts";
-import {EndpointsEnum} from "../../../utils/endpoints";
+import { onMounted, toRaw } from "vue";
+import { useApi } from "../../../globals/composables/useApi.ts";
+import { EndpointsEnum } from "../../../utils/endpoints";
 
 const cart = useCartStore();
 const router = useRouter();
-const {postData} = useApi<any>(EndpointsEnum.CARTS)
+const { postData } = useApi<any>(EndpointsEnum.CARTS);
 
+// Cargar el carrito cuando el componente se monta
 onMounted(() => {
-  cart.fetchCartItems(); // Cargar los productos del carrito al iniciar el componente
+  cart.fetchCartItems();  // Cargar el carrito inicial
 });
 
-// Función para actualizar la cantidad de un producto
-const updateQuantity = (productId: string, newQuantity: number) => {
+// Función para actualizar la cantidad de un producto en el carrito
+const updateQuantity = async (cartItemUuid: string, newQuantity: number) => {
   if (newQuantity > 0) {
-    cart.updateProductQuantity(productId, newQuantity); // Actualiza la cantidad en el carrito
-    postData({ product_id: productId, stock: newQuantity }, toRaw(cart.cartId),'PATCH');
-    cart.fetchCartItems();
+    // Actualiza el carrito localmente primero
+    const item = cart.items.find((i) => i.uuid === cartItemUuid);
+    if (item) {
+      item.quantity = newQuantity;
+    }
 
+    // Llamada a la API para actualizar la cantidad
+    try {
+      await postData({ product_id: item?.product.id, stock: newQuantity }, toRaw(cart.cartId), 'PATCH');
+    } catch (error) {
+      console.error('Error al actualizar el producto:', error);
+    }
   }
 };
 
+// Función para eliminar un producto del carrito
+const removeProduct = async (cartItemUuid: string) => {
+  // Elimina el producto localmente antes de hacer la llamada a la API
+  cart.removeProduct(cartItemUuid);
+
+  // Llamada a la API para eliminar el producto
+  try {
+    await postData({ product_id: cartItemUuid, stock: 0 }, toRaw(cart.cartId), 'PATCH');
+  } catch (error) {
+    console.error('Error al eliminar el producto:', error);
+  }
+};
+
+// Redirigir al checkout
 const goToCheckout = () => {
   router.push({ name: 'checkout' });
 };
-
-
 </script>
