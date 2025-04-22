@@ -4,5 +4,6 @@ export enum EndpointsEnum{
      APPLICATION_TYPE ='application/json',
      PRODUCTS = 'products',
      SHOP = 'shop',
-     SHOP_CATEGORIES = 'shop/categories'
+     SHOP_CATEGORIES = 'shop/categories',
+     CARTS = 'carts'
 }

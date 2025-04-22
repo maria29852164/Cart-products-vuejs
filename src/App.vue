@@ -4,6 +4,7 @@
     <v-app-bar app color="green-darken-4" dark>
       <v-toolbar-title>Mi Aplicación</v-toolbar-title>
       <v-spacer/>
+      <Cart/>
 
       <v-select
           v-model="locale"
@@ -49,6 +50,7 @@ import { useI18n } from 'vue-i18n'
 import { computed } from 'vue'
 import {useRouter} from "vue-router";
 import {useAuth} from "./modules/auth/composables/useAuth.ts";
+import Cart from "./modules/cart/components/cart.vue";
 
 const { locale } = useI18n()
 
