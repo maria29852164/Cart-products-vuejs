@@ -97,7 +97,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch, nextTick } from 'vue';
+import {ref, onMounted, watch, nextTick, toRaw} from 'vue';
 import ProductFilters from "../../modules/products/components/ProductFilters.vue";
 import { useApi } from "../../globals/composables/useApi.ts";
 import type { Product } from "../../modules/types/product.types.ts";
@@ -162,13 +162,17 @@ const onFilter = (newFilters: Record<string, any>) => {
 };
 
 const addToCart = (prod: Product) => {
-  cart.addProduct({
-    id: prod.id.toString(),
-    name: prod.name,
-    price: parseFloat(prod.price),
-    quantity: 1,
-    image: prod.images[0]?.url,
-  });
-  postData({ product_id: prod.id, stock: 1 });
+  const existingCartItem = toRaw(cart.items).find((item) => item.product.id == prod.id);
+  if(!existingCartItem) {
+    cart.addProduct({
+      id: prod.id.toString(),
+      name: prod.name,
+      price: parseFloat(prod.price),
+      quantity: 1,
+      image: prod.images[0]?.url,
+    });
+    postData({ product_id: prod.id, stock: 1 });
+  }
+
 };
 </script>

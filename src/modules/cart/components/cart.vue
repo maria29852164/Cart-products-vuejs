@@ -19,6 +19,17 @@
           </v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-action>
+          <!-- Botón para disminuir cantidad -->
+          <v-btn icon @click="updateQuantity(item.id, item.quantity - 1)" :disabled="item.quantity <= 1">
+            <v-icon>mdi-minus</v-icon>
+          </v-btn>
+
+          <!-- Botón para aumentar cantidad -->
+          <v-btn icon @click="updateQuantity(item.id, item.quantity + 1)">
+            <v-icon>mdi-plus</v-icon>
+          </v-btn>
+
+          <!-- Botón para eliminar producto -->
           <v-btn icon @click="cart.removeProduct(item.id)">
             <v-icon>mdi-delete</v-icon>
           </v-btn>
@@ -38,17 +49,33 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
-import {useCartStore} from "../store/useCartStore.ts";
-import {onMounted} from "vue";
+import { useRouter } from 'vue-router';
+import { useCartStore } from "../store/useCartStore.ts";
+import {onMounted, toRaw} from "vue";
+import {useApi} from "../../../globals/composables/useApi.ts";
+import {EndpointsEnum} from "../../../utils/endpoints";
 
-const cart = useCartStore()
-const router = useRouter()
+const cart = useCartStore();
+const router = useRouter();
+const {postData} = useApi<any>(EndpointsEnum.CARTS)
+
 onMounted(() => {
-  cart.fetchCartItems();
+  cart.fetchCartItems(); // Cargar los productos del carrito al iniciar el componente
 });
 
+// Función para actualizar la cantidad de un producto
+const updateQuantity = (productId: string, newQuantity: number) => {
+  if (newQuantity > 0) {
+    cart.updateProductQuantity(productId, newQuantity); // Actualiza la cantidad en el carrito
+    postData({ product_id: productId, stock: newQuantity }, toRaw(cart.cartId),'PATCH');
+    cart.fetchCartItems();
+
+  }
+};
+
 const goToCheckout = () => {
-  router.push({ name: 'checkout' })
-}
+  router.push({ name: 'checkout' });
+};
+
+
 </script>
